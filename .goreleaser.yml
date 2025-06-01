@@ -1,0 +1,32 @@
+project_name: hqcli
+release:
+  github:
+    owner: Akatana
+    name: hqcli
+
+builds:
+  - main: ./cmd/hq/hq.go
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+    ldflags: "-s -w"
+
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "{{ .ProjectName }}_checksums.txt"
+
+signs:
+  - cmd: gpg
+    args: ["--armor", "--detach-sign"]
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
