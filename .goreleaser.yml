@@ -5,11 +5,10 @@ release:
     name: hqcli
 
 builds:
-  - main: ./cmd/hq/hq.go
+  - main: ./main.go
     goos: [darwin, linux, windows]
     goarch: [amd64, arm64]
-    skip: false
-    go_build_flags: []
+    ldflags: "-s -w"
     env:
       - CGO_ENABLED=0
 
