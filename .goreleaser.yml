@@ -5,34 +5,24 @@ release:
     name: hqcli
 
 builds:
-  - main: ./cmd/hq/hq.go
-    goos: [darwin, linux, windows]
-    goarch: [amd64, arm64]
-    ldflags: "-s -w"
-    env:
-      - CGO_ENABLED=0
+  - env: [CGO_ENABLED=0]
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
 
 dockers:
-  - image_templates:
-      - "ghcr.io/{{ .ProjectName }}/{{ .Version }}:latest"
-
-archives:
-  - format: tar.gz
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-    files:
-      - LICENSE
-      - README.md
-
-checksum:
-  name_template: "{{ .ProjectName }}_checksums.txt"
-
-signs:
-  - cmd: gpg
-    args: ["--armor", "--detach-sign"]
-
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+- image_templates: ["ghcr.io/Akatana/hqcli:{{ .Version }}"]
+  dockerfile: Dockerfile
+  build_flag_templates:
+  - --label=org.opencontainers.image.title={{ .ProjectName }}
+  - --label=org.opencontainers.image.description={{ .ProjectName }}
+  - --label=org.opencontainers.image.url=https://github.com/Akatana/hqcli
+  - --label=org.opencontainers.image.source=https://github.com/Akatana/hqcli
+  - --label=org.opencontainers.image.version={{ .Version }}
+  - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
+  - --label=org.opencontainers.image.revision={{ .FullCommit }}
+  - --label=org.opencontainers.image.licenses=MIT
