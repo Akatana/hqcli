@@ -8,7 +8,14 @@ builds:
   - main: ./cmd/hq/hq.go
     goos: [darwin, linux, windows]
     goarch: [amd64, arm64]
-    ldflags: "-s -w"
+    skip: false
+    go_build_flags: []
+    env:
+      - CGO_ENABLED=0
+
+dockers:
+  - image_templates:
+      - "ghcr.io/{{ .ProjectName }}/{{ .Version }}:latest"
 
 archives:
   - format: tar.gz
