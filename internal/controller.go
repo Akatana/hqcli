@@ -24,7 +24,7 @@ func SelectTask(tasks []api.Task) (api.Task, error) {
 	idx, err := fuzzyfinder.Find(
 		tasks,
 		func(i int) string {
-			return BuildNamePathWithIDs(tasks[i], tasks)
+			return buildTaskPath(tasks[i], tasks)
 		},
 	)
 	if err != nil {
@@ -33,7 +33,7 @@ func SelectTask(tasks []api.Task) (api.Task, error) {
 	return tasks[idx], nil
 }
 
-func BuildNamePathWithIDs(item api.Task, allItems []api.Task) string {
+func buildTaskPath(item api.Task, allItems []api.Task) string {
 	idMap := make(map[int]api.Task)
 	for _, t := range allItems {
 		idMap[t.ID] = t

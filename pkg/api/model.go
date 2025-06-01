@@ -22,7 +22,7 @@ type UserReporting struct {
 	Name          string    `json:"name"`
 	StartOn       time.Time `json:"startOn"`
 	EndOn         time.Time `json:"endOn"`
-	BreakDuration float32   `json:"breakDuration"`
+	BreakDuration float32   `json:"breakDuration,omitempty"`
 	UserID        int       `json:"userId"`
 	TaskID        int       `json:"taskId"`
 }
