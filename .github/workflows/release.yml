@@ -20,10 +20,12 @@ jobs:
         with:
           go-version: 1.20
 
-      - name: Run GoReleaser (Docker mode)
+      - name: Run GoReleaser with Docker
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: release --clean --skip-validate
+          args: release --clean --skip=validate
+          install-only: false
+          use-docker: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
